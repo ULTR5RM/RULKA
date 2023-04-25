@@ -20,10 +20,84 @@ namespace RULKA.Pages
     /// Логика взаимодействия для OrderPage.xaml
     /// </summary>
     public partial class OrderPage : Page
+
     {
+        List<Product> productList = new List<Product>();
         public OrderPage(List<Product> products, User user)
         {
             InitializeComponent();
+
+            DataContext = this;
+            productList = products;
+            lVOrder.ItemsSource = productList;
+
+            cmbPickupPoint.ItemsSource = CarServiceEntities.GetContext().PickupPoint.ToList();
+            if (user != null) txtUser.Text = user.UserSurname.ToString() + " " + user.UserName.ToString() + " " + user.UserPatronymic.ToString(); ;
+        }
+        public string Total
+        {
+            get
+            {
+                var total = productList.Sum(p => Convert.ToDouble(p.ProductCost) - Convert.ToDouble(p.ProductCost) * Convert.ToDouble(p.ProductDiscountAmount / 100.00));
+                return total.ToString();
+            }
+        }
+        private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите удалить товар?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                productList.Remove(lVOrder.SelectedItem as Product);
+                lVOrder.ItemsSource = productList;
+            }
+        }
+
+        private void btnOrderSave_Click(object sender, RoutedEventArgs e)
+        {
+            var productArticle = productList.Select(p => p.ProductArticleNumber).ToArray();
+            Random rnd = new Random();
+            var date = DateTime.Now;
+            if (productList.Any(p => p.ProductQuantityInStock < 3)) date = date.AddDays(6);
+            else date = date.AddDays(3);
+
+            if (cmbPickupPoint.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите пункт выдачи!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                Order newOrder = new Order()
+                {
+                    OrderStatusID = 1,
+                    OrderData = DateTime.Now,
+                    OrderDeliveryDate = date,
+                    OrderPickupPoint = cmbPickupPoint.SelectedIndex + 1,
+                    ReceiptCode = rnd.Next(100, 1000),
+                    ClientID = Int32.Parse(txtUser.Text)           
+                };
+
+                CarServiceEntities.GetContext().Order.Add(newOrder);
+                CarServiceEntities.GetContext().SaveChanges();
+
+                for (int i = 0; i < productArticle.Count(); i++)
+                {
+                    OrderProduct newOrderProduct = new OrderProduct()
+                    {
+                        OrderID = newOrder.OrderID,
+                        ProductArticleNumber = productArticle[i]
+                    };
+                    CarServiceEntities.GetContext().OrderProduct.Add(newOrderProduct);
+                }
+
+                CarServiceEntities.GetContext().SaveChanges();
+                MessageBox.Show("Заказ оформлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.Navigate(new OrderTicketPage(newOrder, productList));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

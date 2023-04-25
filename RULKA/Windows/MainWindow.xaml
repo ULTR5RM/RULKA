@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RULKA"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" Icon="C:\Users\ultrr\OneDrive\Рабочий стол\NATK\RULKA\RULKA\Resources\icon.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,11 +18,15 @@
 
         <Grid Grid.Row="0" Background="#FF76E383">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="19*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="611*"/>
+                <ColumnDefinition Width="189*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btnBack" HorizontalAlignment="Left" Content="Выход" Click="btnBack_Click" Grid.Column="1" Margin="10,0,0,0" Width="182"/>
-            <Image Width="45" Height="45" HorizontalAlignment="Left" Margin="5,8,0,8"/>
+            <Button Name="btnBack" Content="Выход" Click="btnBack_Click" Grid.Column="1" Margin="5" Background="#FF498C51" FontFamily="Comic Sans MS" FontSize="14" Width="120" Height="40"/>
+            <Image Width="45" HorizontalAlignment="Left" Margin="5,8,0,8">
+                <Image.OpacityMask>
+                    <ImageBrush ImageSource="C:\Users\ultrr\OneDrive\Рабочий стол\NATK\RULKA\RULKA\Resources\logo.png" Stretch="UniformToFill"/>
+                </Image.OpacityMask>
+            </Image>
         </Grid>
         <Frame x:Name="FrmMain" Grid.Row="1" NavigationUIVisibility="Hidden" ContentRendered="FrmMain_ContentRendered" Navigated="FrmMain_Navigated" />
     </Grid>

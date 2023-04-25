@@ -16,7 +16,7 @@
             <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="lViewOrder" d:ItemsSource="{d:SampleData ItemCount=1}">
+        <ListView x:Name="lVOrder" d:ItemsSource="{d:SampleData ItemCount=1}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -32,12 +32,33 @@
                                 <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
 
-                            <!--<Image Height="90" Width="100" Margin="5" Grid.Column="0" Stretch="Uniform" Source="{Binding ImgPath, FallbackValue={StaticResource defaultImage}}"/>-->
+                            <Image Height="90" Width="100" Margin="5" Grid.Column="0" Stretch="Uniform" Source="{Binding ImgPath, FallbackValue={}}"/>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding ProductName}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding ProductDescription}"/>
+                                <TextBlock Text="{Binding Manufacture.Manufacture1}"/>
+                                <TextBlock Text="{Binding ProductCost}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="{Binding ProductDiscountAmount, StringFormat='\{0} %'}" Margin="0,15,0,0"/>
+                                <Button x:Name="btnDeleteProduct" Content="X" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,15,0,0" Width="30" Height="30" Click="btnDeleteProduct_Click" Background="#FF498C51"/>
+                            </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-   
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Пункт выдачи:"/>
+            <ComboBox Name="cmbPickupPoint" DisplayMemberPath="Addres" SelectedValuePath="ID" Height="42"/>
+            <TextBlock Text="Клиент:"/>
+            <TextBox x:Name="txtUser"/>
+            <TextBlock Text="Итого:"/>
+            <TextBlock Text="{Binding Total, StringFormat='\{0} рублей'}"/>
+            <Button x:Name="btnOrderSave" Content="Оформить заказ" Grid.Row="1" HorizontalAlignment="Center" Width="200" Click="btnOrderSave_Click" Height="38" Background="#FF498C51"/>
+        </StackPanel>
     </Grid>
 </Page>

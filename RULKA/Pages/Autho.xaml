@@ -22,7 +22,7 @@
             <TextBlock Text="Пароль:" />
             <StackPanel Orientation="Horizontal">
                 <TextBox Name="txtPassword" Width="220" Margin="5,5,-220,5" TextChanged="txtPassword_TextChanged" />
-                <PasswordBox Name="Pswbox" Width="220" Height="27" PasswordChanged="Pswbox_PasswordChanged"/>
+                <PasswordBox Name="Pswbox" Width="244" Height="27" PasswordChanged="Pswbox_PasswordChanged"/>
                 <Button Name="btnSee" Width="29" Height="27" Background="White" Click="btnSee_Click">
                     <Image Name="imgSee" Width="25" Height="25" Source="/Resources/See.png"/>
                 </Button>
@@ -45,8 +45,8 @@
             <TextBox Name="textBlockCaptcha"/>
 
             <StackPanel Orientation="Horizontal" Height="80" HorizontalAlignment="Center">
-                <Button Name="btnEnterGuest" Margin="5, 15, 5, 5" Content="Войти как гость" Click="btnEnterGuest_Click"/>
-                <Button Name="btnEnter" Margin="5, 15, 5, 5" Content="Войти" Click="btnEnter_Click"/>
+                <Button Name="btnEnterGuest" Margin="5, 15, 5, 5" Content="Войти как гость" Click="btnEnterGuest_Click" Height="46" Width="94" Background="#FF498C51"/>
+                <Button Name="btnEnter" Margin="5, 15, 5, 5" Content="Войти" Click="btnEnter_Click" Height="46" Width="102" Background="#FF498C51"/>
             </StackPanel>
 
         </StackPanel>

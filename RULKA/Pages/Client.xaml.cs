@@ -27,6 +27,7 @@ namespace RULKA.Pages
         {
             InitializeComponent();
 
+
             var product = CarServiceEntities.GetContext().Product.ToList();
             LViewProduct.ItemsSource = product;
             DataContext = this;
@@ -36,7 +37,7 @@ namespace RULKA.Pages
             user = currentUser;
 
             UpdateData();
-            User();
+               User();
         }
 
         private void User()

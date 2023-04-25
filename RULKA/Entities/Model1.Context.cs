@@ -19,12 +19,20 @@ namespace RULKA.Entities
             : base("name=CarServiceEntities")
         {
         }
-    
+        private static CarServiceEntities context;
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+        public static CarServiceEntities GetContext()
+        {
+            if (context == null)
+                context = new CarServiceEntities();
+            return context;
+        }
+
+
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderProduct> OrderProduct { get; set; }
         public virtual DbSet<OrderStatus> OrderStatus { get; set; }
@@ -34,6 +42,7 @@ namespace RULKA.Entities
         public virtual DbSet<ProductStatus> ProductStatus { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Suppler> Suppler { get; set; }
+  
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
     }

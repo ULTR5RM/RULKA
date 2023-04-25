@@ -89,32 +89,32 @@ namespace RULKA.Pages
             }
 
             else if (countUnsuccessful == 1)
-            {
-                if (textBlockCaptcha.Text.ToLower() == text.ToLower() && usercount > 0)
                 {
-                    MessageBox.Show("Вы вошли под: " + user.Role.RoleName.ToString());
-                    LoadForm(user.Role.RoleName.ToString(), user);
+                    if (textBlockCaptcha.Text.ToLower() == text.ToLower() && usercount > 0)
+                    {
+                        MessageBox.Show("Вы вошли под: " + user.Role.RoleName.ToString());
+                        LoadForm(user.Role.RoleName.ToString(), user);
+                    }
+
+                    else
+                    {
+                        imgCaptcha.Visibility = Visibility.Hidden;
+                        textBlockCaptcha.Visibility = Visibility.Hidden;
+                        clearFields();
+                        MessageBox.Show("Подождите 10 секунд");
+                        countUnsuccessful = 0;
+
+                        DispatcherTimer timer = new DispatcherTimer();
+                        timer.Interval = new TimeSpan(0, 0, 10);
+                        timer.Start();
+                        btnEnter.IsEnabled = false;
+                        timer.Tick += new EventHandler(Timer_Tick);
+                    }
                 }
 
-                else
-                {
-                    imgCaptcha.Visibility = Visibility.Hidden;
-                    textBlockCaptcha.Visibility = Visibility.Hidden;
-                    clearFields();
-                    MessageBox.Show("Подождите 10 секунд");
-                    countUnsuccessful = 0;
 
-                    DispatcherTimer timer = new DispatcherTimer();
-                    timer.Interval = new TimeSpan(0, 0, 10);
-                    timer.Start();
-                    btnEnter.IsEnabled = false;
-                    timer.Tick += new EventHandler(Timer_Tick);
-                }
+
             }
-
-        
-
-        }
         private void Timer_Tick(object sender, EventArgs e)
         {
             btnEnter.IsEnabled = true;
@@ -237,9 +237,13 @@ namespace RULKA.Pages
                 case "Клиент":
                     NavigationService.Navigate(new Client(user));
                     break;
+                case "Администратор":
+                    NavigationService.Navigate(new Admin(user));
+                    break;
+
+
+
             }
-
-
         }
         private void newCaptcha(int mode)
         {
